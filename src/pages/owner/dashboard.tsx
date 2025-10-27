@@ -5,7 +5,7 @@ import { useDashboardSnapshotQuery } from '@/api/hooks/useDashboard';
 import { formatCurrency } from '@/api/utils';
 
 const OwnerDashboardPage = () => {
-  const canRender = useProtectedRoute('/customer/login');
+  const canRender = useProtectedRoute('/customer/login', ['OWNER']);
   const snapshotQuery = useDashboardSnapshotQuery();
   const snapshot = snapshotQuery.data;
 

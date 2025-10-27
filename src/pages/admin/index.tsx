@@ -2,17 +2,17 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useProtectedRoute } from '@/hooks/useProtectedRoute';
 
-const OwnerIndexPage = () => {
-  const canAccess = useProtectedRoute('/customer/login', ['OWNER']);
+const AdminIndexPage = () => {
   const router = useRouter();
+  const canAccess = useProtectedRoute('/customer/login', ['ADMIN']);
 
   useEffect(() => {
     if (canAccess) {
-      router.replace('/owner/dashboard');
+      router.replace('/admin/dashboard');
     }
   }, [canAccess, router]);
 
   return null;
 };
 
-export default OwnerIndexPage;
+export default AdminIndexPage;

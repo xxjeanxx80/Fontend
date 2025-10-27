@@ -5,6 +5,9 @@ export interface SpaFilters {
   search?: string;
   location?: string;
   category?: string;
+  status?: string;
+  isApproved?: boolean;
+  ownerId?: number;
 }
 
 export interface CreateSpaDto {
@@ -18,6 +21,8 @@ export type UpdateSpaDto = Partial<CreateSpaDto>;
 export interface UpdateSpaApprovalDto {
   isApproved: boolean;
 }
+
+export type AdminUpdateSpaApprovalDto = UpdateSpaApprovalDto;
 
 export const getSpas = async (
   filters?: SpaFilters,
@@ -51,5 +56,13 @@ export const updateSpaApproval = async (
   payload: UpdateSpaApprovalDto,
 ): Promise<ApiResponse<Spa>> => {
   const response = await api.patch<ApiResponse<Spa>>(`/spas/${id}/approval`, payload);
+  return response.data;
+};
+
+export const adminUpdateSpaApproval = async (
+  id: number,
+  payload: AdminUpdateSpaApprovalDto,
+): Promise<ApiResponse<Spa>> => {
+  const response = await api.patch<ApiResponse<Spa>>(`/admin/spas/${id}/approval`, payload);
   return response.data;
 };

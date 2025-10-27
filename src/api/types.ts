@@ -194,4 +194,78 @@ export interface DashboardSnapshot {
   averageRating: number;
   pendingPayouts?: number;
   upcomingBookings?: number;
+  totalUsers?: number;
+  totalBookings?: number;
+  activeSpas?: number;
+  newUsersThisMonth?: number;
+  bookingsTrend?: DashboardTrendPoint[];
+  revenueBreakdown?: DashboardBreakdownPoint[];
+}
+
+export interface DashboardTrendPoint {
+  period: string;
+  bookings?: number;
+  revenue?: number;
+  users?: number;
+}
+
+export interface DashboardBreakdownPoint {
+  label: string;
+  value: number;
+}
+
+export interface Campaign {
+  id: number;
+  name: string;
+  description?: string;
+  discountPercent: number;
+  startsAt: string;
+  endsAt?: string;
+  isActive: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface Coupon {
+  id: number;
+  code: string;
+  discountPercent: number;
+  maxRedemptions?: number;
+  redeemedCount?: number;
+  expiresAt?: string;
+  isActive: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export type ReportTargetType = 'SPA' | 'SERVICE' | 'STAFF' | 'FEEDBACK';
+
+export interface Report {
+  id: number;
+  targetType: ReportTargetType;
+  targetId: number;
+  reason: string;
+  status?: 'OPEN' | 'IN_REVIEW' | 'RESOLVED';
+  notes?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  resolvedAt?: string;
+  reporterName?: string;
+}
+
+export interface SystemSetting {
+  key: string;
+  value: string;
+  description?: string;
+  updatedAt?: string;
+  createdAt?: string;
+}
+
+export interface AdminLog {
+  id: number;
+  level: 'INFO' | 'WARN' | 'ERROR' | string;
+  message: string;
+  context?: string;
+  createdAt?: string;
+  actorEmail?: string;
 }

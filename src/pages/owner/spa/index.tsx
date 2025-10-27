@@ -10,7 +10,7 @@ import {
 } from '@/api/hooks/useSpaProfile';
 
 const SpaManagementPage = () => {
-  const canRender = useProtectedRoute('/customer/login');
+  const canRender = useProtectedRoute('/customer/login', ['OWNER']);
   const router = useRouter();
   const querySpaId = useMemo(() => {
     const value = router.query.spaId;

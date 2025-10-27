@@ -15,7 +15,7 @@ import { formatDateTime } from '@/api/utils';
 import { toast } from 'react-hot-toast';
 
 const StaffManagementPage = () => {
-  const canRender = useProtectedRoute('/customer/login');
+  const canRender = useProtectedRoute('/customer/login', ['OWNER']);
   const router = useRouter();
   const querySpaId = useMemo(() => {
     const value = router.query.spaId;

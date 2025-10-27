@@ -13,7 +13,7 @@ const statusLabels: Record<string, string> = {
 };
 
 const OwnerPayoutsPage = () => {
-  const canRender = useProtectedRoute('/customer/login');
+  const canRender = useProtectedRoute('/customer/login', ['OWNER']);
   const router = useRouter();
   const querySpaId = useMemo(() => {
     const value = router.query.spaId;
