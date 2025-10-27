@@ -15,7 +15,7 @@ import { formatDateTime } from '@/api/utils';
 import { toast } from 'react-hot-toast';
 
 const StaffManagementPage = () => {
-  const canRender = useProtectedRoute('/login', ['OWNER']);
+  const canRender = useProtectedRoute('/owner/login', ['OWNER']);
   const router = useRouter();
   const querySpaId = useMemo(() => {
     const value = router.query.spaId;
@@ -119,8 +119,8 @@ const StaffManagementPage = () => {
     }
     const formData = new FormData(event.currentTarget);
     const payload = {
-      startTime: String(formData.get('startTime') ?? ''),
-      endTime: String(formData.get('endTime') ?? ''),
+      startAt: String(formData.get('startAt') ?? ''),
+      endAt: String(formData.get('endAt') ?? ''),
     };
     assignShiftMutation.mutate(
       { staffId: activeStaff.id, data: payload },
@@ -150,7 +150,7 @@ const StaffManagementPage = () => {
   };
 
   if (!canRender) {
-    return null;
+    return <div className="p-8 text-gray-500">Loading...</div>;
   }
 
   return (
@@ -448,7 +448,7 @@ const StaffManagementPage = () => {
                       Start
                       <input
                         type="datetime-local"
-                        name="startTime"
+                        name="startAt"
                         required
                         className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm shadow-sm transition focus:border-primary focus:outline-none focus:ring focus:ring-primary/30 dark:border-slate-700 dark:bg-navy-800"
                       />
@@ -457,7 +457,7 @@ const StaffManagementPage = () => {
                       End
                       <input
                         type="datetime-local"
-                        name="endTime"
+                        name="endAt"
                         required
                         className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm shadow-sm transition focus:border-primary focus:outline-none focus:ring focus:ring-primary/30 dark:border-slate-700 dark:bg-navy-800"
                       />

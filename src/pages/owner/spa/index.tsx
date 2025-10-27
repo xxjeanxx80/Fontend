@@ -10,7 +10,7 @@ import {
 } from '@/api/hooks/useSpaProfile';
 
 const SpaManagementPage = () => {
-  const canRender = useProtectedRoute('/login', ['OWNER']);
+  const canRender = useProtectedRoute('/owner/login', ['OWNER']);
   const router = useRouter();
   const querySpaId = useMemo(() => {
     const value = router.query.spaId;
@@ -98,7 +98,7 @@ const SpaManagementPage = () => {
   };
 
   if (!canRender) {
-    return null;
+    return <div className="p-8 text-gray-500">Loading...</div>;
   }
 
   return (
@@ -210,9 +210,9 @@ const SpaManagementPage = () => {
             <button
               type="submit"
               className="inline-flex items-center justify-center rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white shadow hover:bg-primary/90 focus:outline-none focus:ring focus:ring-primary/40"
-              disabled={createSpaMutation.isLoading}
+              disabled={createSpaMutation.isPending}
             >
-              {createSpaMutation.isLoading ? 'Submitting…' : 'Submit for review'}
+              {createSpaMutation.isPending ? 'Submitting…' : 'Submit for review'}
             </button>
           </form>
         </div>
@@ -264,9 +264,9 @@ const SpaManagementPage = () => {
               <button
                 type="submit"
                 className="inline-flex items-center justify-center rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white shadow hover:bg-primary/90 focus:outline-none focus:ring focus:ring-primary/40"
-                disabled={updateSpaMutation.isLoading}
+                disabled={updateSpaMutation.isPending}
               >
-                {updateSpaMutation.isLoading ? 'Saving…' : 'Save changes'}
+                {updateSpaMutation.isPending ? 'Saving…' : 'Save changes'}
               </button>
             </form>
           </div>
@@ -284,7 +284,9 @@ const SpaManagementPage = () => {
                     ? 'bg-emerald-500 text-white hover:bg-emerald-600'
                     : 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200'
                 }`}
-                disabled={updateApprovalMutation.isLoading && updateApprovalMutation.variables?.isApproved === true}
+                disabled={
+                  updateApprovalMutation.isPending && updateApprovalMutation.variables?.isApproved === true
+                }
               >
                 Mark as approved
               </button>
@@ -296,7 +298,9 @@ const SpaManagementPage = () => {
                     ? 'bg-amber-500 text-white hover:bg-amber-600'
                     : 'bg-amber-100 text-amber-700 hover:bg-amber-200'
                 }`}
-                disabled={updateApprovalMutation.isLoading && updateApprovalMutation.variables?.isApproved === false}
+                disabled={
+                  updateApprovalMutation.isPending && updateApprovalMutation.variables?.isApproved === false
+                }
               >
                 Mark as pending
               </button>

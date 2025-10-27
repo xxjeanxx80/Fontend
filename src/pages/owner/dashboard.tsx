@@ -5,12 +5,12 @@ import { useDashboardSnapshotQuery } from '@/api/hooks/useDashboard';
 import { formatCurrency } from '@/api/utils';
 
 const OwnerDashboardPage = () => {
-  const canRender = useProtectedRoute('/login', ['OWNER']);
+  const canRender = useProtectedRoute('/owner/login', ['OWNER']);
   const snapshotQuery = useDashboardSnapshotQuery();
   const snapshot = snapshotQuery.data;
 
   if (!canRender) {
-    return null;
+    return <div className="p-8 text-gray-500">Loading...</div>;
   }
 
   return (

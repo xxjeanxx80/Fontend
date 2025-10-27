@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useProtectedRoute } from '@/hooks/useProtectedRoute';
 
 const OwnerIndexPage = () => {
-  const canAccess = useProtectedRoute('/login', ['OWNER']);
+  const canAccess = useProtectedRoute('/owner/login', ['OWNER']);
   const router = useRouter();
 
   useEffect(() => {

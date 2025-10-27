@@ -8,7 +8,7 @@ import { formatCurrency, formatDateTime } from '@/api/utils';
 import { toast } from 'react-hot-toast';
 
 const OwnerBookingsPage = () => {
-  const canRender = useProtectedRoute('/login', ['OWNER']);
+  const canRender = useProtectedRoute('/owner/login', ['OWNER']);
   const router = useRouter();
   const querySpaId = useMemo(() => {
     const value = router.query.spaId;
@@ -37,9 +37,7 @@ const OwnerBookingsPage = () => {
     const parsedId = Number.parseInt(spaIdInput, 10);
     if (!Number.isNaN(parsedId)) {
       setSpaId(parsedId);
-      router.replace({ pathname: router.pathname, query: parsedId ? { spaId: parsedId } : undefined }, undefined, {
-        shallow: true,
-      });
+      router.replace({ pathname: router.pathname, query: { spaId: parsedId } }, undefined, { shallow: true });
     }
   };
 
@@ -84,7 +82,7 @@ const OwnerBookingsPage = () => {
   };
 
   if (!canRender) {
-    return null;
+    return <div className="p-8 text-gray-500">Loading...</div>;
   }
 
   return (

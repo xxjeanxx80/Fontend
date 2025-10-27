@@ -50,7 +50,7 @@ const RescheduleBookingPage = () => {
   };
 
   if (!canRender) {
-    return null;
+    return <div className="p-8 text-gray-500">Loading...</div>;
   }
 
   if (!booking) {

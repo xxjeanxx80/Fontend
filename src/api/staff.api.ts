@@ -16,8 +16,8 @@ export interface CreateStaffDto {
 export type UpdateStaffDto = Partial<CreateStaffDto>;
 
 export interface AssignShiftDto {
-  startTime: string;
-  endTime: string;
+  startAt: string;
+  endAt: string;
 }
 
 export interface RequestTimeOffDto {

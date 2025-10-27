@@ -107,8 +107,8 @@ export interface Staff {
 export interface StaffShift {
   id: number;
   staffId: number;
-  startTime: string;
-  endTime: string;
+  startAt: string;
+  endAt: string;
   createdAt?: string;
 }
 

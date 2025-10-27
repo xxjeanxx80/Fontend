@@ -7,7 +7,7 @@ const CustomerHomePage = () => {
   const canRender = useProtectedRoute();
 
   if (!canRender) {
-    return null;
+    return <div className="p-8 text-gray-500">Loading...</div>;
   }
 
   return (

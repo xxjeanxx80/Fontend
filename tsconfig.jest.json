@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "jsx": "react-jsx",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@testing-library/react": ["./test/mocks/testing-library-react"],
+      "jwt-decode": ["./src/lib/jwt-decode"]
+    }
+  }
+}
