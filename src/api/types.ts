@@ -17,7 +17,7 @@ export interface PaginatedData<T> {
   meta?: PaginationMeta;
 }
 
-export interface PaginatedResponse<T> extends ApiResponse<PaginatedData<T>> {}
+export type PaginatedResponse<T> = ApiResponse<PaginatedData<T>>;
 
 export type UserRole = 'CUSTOMER' | 'OWNER' | 'ADMIN';
 
@@ -67,29 +67,59 @@ export interface Spa {
   openingHours?: string;
   contactEmail?: string;
   contactPhone?: string;
+  ownerId?: number;
+  isApproved?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface Service {
   id: number;
   name: string;
   description?: string;
-  duration?: number;
+  durationMinutes?: number;
   price?: number;
   spaId?: number;
   category?: string;
   imageUrl?: string;
   currency?: string;
+  serviceType?: 'AT_SPA' | 'AT_HOME';
+  availableAtHome?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface Staff {
   id: number;
   name: string;
+  email?: string;
+  phone?: string;
   title?: string;
   avatarUrl?: string;
   rating?: number;
   spaId?: number;
   bio?: string;
   skills?: string[];
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface StaffShift {
+  id: number;
+  staffId: number;
+  startTime: string;
+  endTime: string;
+  createdAt?: string;
+}
+
+export interface StaffTimeOff {
+  id: number;
+  staffId: number;
+  startAt: string;
+  endAt: string;
+  reason?: string;
+  status?: 'PENDING' | 'APPROVED' | 'REJECTED';
+  createdAt?: string;
 }
 
 export type BookingStatus =
@@ -145,4 +175,23 @@ export interface OAuthProviderConfig {
   provider: 'google' | 'facebook';
   authorizeUrl: string;
   enabled: boolean;
+}
+
+export interface Payout {
+  id: number;
+  ownerId?: number;
+  spaId?: number;
+  amount: number;
+  status: 'REQUESTED' | 'APPROVED' | 'COMPLETED' | 'REJECTED';
+  notes?: string;
+  requestedAt?: string;
+  processedAt?: string;
+}
+
+export interface DashboardSnapshot {
+  totalRevenue: number;
+  completedBookings: number;
+  averageRating: number;
+  pendingPayouts?: number;
+  upcomingBookings?: number;
 }

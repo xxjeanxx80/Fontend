@@ -4,6 +4,7 @@ import type { ApiResponse, Booking } from './types';
 export interface BookingFilters {
   status?: string;
   customerId?: number;
+  spaId?: number;
 }
 
 export interface CreateBookingDto {
