@@ -41,7 +41,7 @@ const toDateInputValue = (value?: string) => {
 };
 
 const AdminCouponsPage = () => {
-  const canRender = useProtectedRoute('/customer/login', ['ADMIN']);
+  const canRender = useProtectedRoute('/login', ['ADMIN']);
   const couponsQuery = useCoupons();
   const createMutation = useCreateCouponMutation();
   const deleteMutation = useDeleteCouponMutation();

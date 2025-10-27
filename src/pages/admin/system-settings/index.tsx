@@ -26,7 +26,7 @@ const defaultFormState: SettingFormState = {
 };
 
 const AdminSystemSettingsPage = () => {
-  const canRender = useProtectedRoute('/customer/login', ['ADMIN']);
+  const canRender = useProtectedRoute('/login', ['ADMIN']);
   const settingsQuery = useSettings();
   const createMutation = useCreateSystemSettingMutation();
   const deleteMutation = useDeleteSystemSettingMutation();

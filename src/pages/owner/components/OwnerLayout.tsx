@@ -28,7 +28,7 @@ const OwnerLayout = ({ title, subtitle, children }: OwnerLayoutProps) => {
   const handleLogout = () => {
     logout();
     toast.success('Signed out successfully');
-    router.push('/customer/login');
+    router.push('/login');
   };
 
   const renderNavigation = (variant: 'desktop' | 'mobile' = 'desktop') => (

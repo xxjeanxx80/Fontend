@@ -23,8 +23,8 @@ api.interceptors.response.use(
       const status = error?.response?.status;
       if (status === 401) {
         clearAuthStorage();
-        if (!window.location.pathname.includes('/customer/login')) {
-          window.location.href = '/customer/login';
+        if (!window.location.pathname.startsWith('/login')) {
+          window.location.href = '/login';
         }
       }
     }

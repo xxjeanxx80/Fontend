@@ -11,7 +11,7 @@ import { toast } from 'react-hot-toast';
 import { extractErrorMessage, formatDateTime } from '@/api/utils';
 
 const AdminSpaApprovalsPage = () => {
-  const canRender = useProtectedRoute('/customer/login', ['ADMIN']);
+  const canRender = useProtectedRoute('/login', ['ADMIN']);
   const queryClient = useQueryClient();
   const spaQuery = useSpasQuery({ status: 'PENDING' });
 

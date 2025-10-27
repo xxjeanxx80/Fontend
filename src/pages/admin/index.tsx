@@ -4,7 +4,7 @@ import { useProtectedRoute } from '@/hooks/useProtectedRoute';
 
 const AdminIndexPage = () => {
   const router = useRouter();
-  const canAccess = useProtectedRoute('/customer/login', ['ADMIN']);
+  const canAccess = useProtectedRoute('/login', ['ADMIN']);
 
   useEffect(() => {
     if (canAccess) {

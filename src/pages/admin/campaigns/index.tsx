@@ -46,7 +46,7 @@ const toDateTimeInputValue = (value?: string) => {
 };
 
 const AdminCampaignsPage = () => {
-  const canRender = useProtectedRoute('/customer/login', ['ADMIN']);
+  const canRender = useProtectedRoute('/login', ['ADMIN']);
   const campaignsQuery = useCampaigns();
   const createMutation = useCreateCampaignMutation();
   const deleteMutation = useDeleteCampaignMutation();

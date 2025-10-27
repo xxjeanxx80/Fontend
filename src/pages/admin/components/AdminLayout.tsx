@@ -54,7 +54,7 @@ const AdminLayout = ({ title, subtitle, children }: AdminLayoutProps) => {
   const handleLogout = () => {
     logout();
     toast.success('Signed out');
-    router.push('/customer/login');
+    router.push('/login');
   };
 
   const renderNavigation = (variant: 'desktop' | 'mobile') => (

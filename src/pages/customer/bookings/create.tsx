@@ -51,7 +51,7 @@ const CreateBookingPage = () => {
     event.preventDefault();
     if (!user?.id) {
       toast.error('You need to be logged in to create a booking.');
-      router.push('/customer/login');
+      router.push('/login');
       return;
     }
     if (!selectedSpa || !selectedService || !scheduledAt) {

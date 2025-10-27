@@ -1,8 +1,9 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { getAccessToken } from '@/api/storage';
+import { decodeAccessToken, getRoleHomePath, isTokenExpired } from '@/utils/auth';
 
-export const useRedirectIfAuthenticated = (destination = '/customer/spas') => {
+export const useRedirectIfAuthenticated = (destination?: string) => {
   const router = useRouter();
 
   useEffect(() => {
@@ -11,7 +12,12 @@ export const useRedirectIfAuthenticated = (destination = '/customer/spas') => {
     }
     const token = getAccessToken();
     if (token) {
-      router.replace(destination);
+      const decoded = decodeAccessToken(token);
+      if (!decoded || isTokenExpired(decoded)) {
+        return;
+      }
+      const target = destination ?? getRoleHomePath(decoded.role ?? null);
+      router.replace(target);
     }
   }, [destination, router]);
 };

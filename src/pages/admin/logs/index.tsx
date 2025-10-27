@@ -19,7 +19,7 @@ const levelStyles: Record<string, string> = {
 };
 
 const AdminLogsPage = () => {
-  const canRender = useProtectedRoute('/customer/login', ['ADMIN']);
+  const canRender = useProtectedRoute('/login', ['ADMIN']);
   const [levelFilter, setLevelFilter] = useState<string>('');
   const logsQuery = useAdminLogs(levelFilter ? { level: levelFilter, limit: 100 } : { limit: 100 });
 

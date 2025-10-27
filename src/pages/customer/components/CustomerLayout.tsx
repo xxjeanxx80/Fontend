@@ -26,7 +26,7 @@ const CustomerLayout = ({ children, title, subtitle }: CustomerLayoutProps) => {
   const handleLogout = () => {
     logout();
     toast.success('Signed out successfully');
-    router.push('/customer/login');
+    router.push('/login');
   };
 
   return (
@@ -76,7 +76,7 @@ const CustomerLayout = ({ children, title, subtitle }: CustomerLayoutProps) => {
               </>
             ) : (
               <Link
-                href="/customer/login"
+                href="/login"
                 className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white shadow hover:bg-primary/90"
               >
                 Login

@@ -15,7 +15,7 @@ const statusStyles: Record<string, string> = {
 };
 
 const AdminReportsPage = () => {
-  const canRender = useProtectedRoute('/customer/login', ['ADMIN']);
+  const canRender = useProtectedRoute('/login', ['ADMIN']);
   const reportsQuery = useReports();
   const resolveMutation = useResolveReportMutation();
 

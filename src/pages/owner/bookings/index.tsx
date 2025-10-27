@@ -8,7 +8,7 @@ import { formatCurrency, formatDateTime } from '@/api/utils';
 import { toast } from 'react-hot-toast';
 
 const OwnerBookingsPage = () => {
-  const canRender = useProtectedRoute('/customer/login', ['OWNER']);
+  const canRender = useProtectedRoute('/login', ['OWNER']);
   const router = useRouter();
   const querySpaId = useMemo(() => {
     const value = router.query.spaId;

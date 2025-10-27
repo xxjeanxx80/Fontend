@@ -121,7 +121,7 @@ const CustomerRegisterPage = () => {
         </form>
         <p className="mt-6 text-center text-sm text-slate-600 dark:text-slate-300">
           Already have an account?{' '}
-          <Link href="/customer/login" className="font-semibold text-primary hover:underline">
+          <Link href="/login" className="font-semibold text-primary hover:underline">
             Sign in
           </Link>
         </p>

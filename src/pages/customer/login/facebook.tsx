@@ -9,7 +9,7 @@ const FacebookLoginPlaceholder = () => (
         password today while we polish the final touches.
       </p>
       <Link
-        href="/customer/login"
+        href="/login"
         className="mt-6 inline-flex items-center rounded-lg bg-primary px-5 py-2 text-sm font-semibold text-white shadow hover:bg-primary/90"
       >
         Back to login

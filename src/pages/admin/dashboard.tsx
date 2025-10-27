@@ -9,7 +9,7 @@ const ApexChart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 const AdminDashboardPage = () => {
   const router = useRouter();
-  const canRender = useProtectedRoute('/customer/login', ['ADMIN']);
+  const canRender = useProtectedRoute('/login', ['ADMIN']);
   const snapshotQuery = useDashboardSnapshotQuery();
   const snapshot = snapshotQuery.data;
 
