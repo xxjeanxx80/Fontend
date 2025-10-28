@@ -7,8 +7,12 @@ import { formatDateTime } from '@/api/utils';
 const LoyaltyPage = () => {
   const canRender = useProtectedRoute();
   const user = useStoredUser();
-  const pointsQuery = useLoyaltyPointsQuery(user?.id);
-  const rankQuery = useLoyaltyRankQuery(user?.id);
+  const pointsQuery = useLoyaltyPointsQuery(user?.id, {
+    enabled: canRender && typeof user?.id === 'number',
+  });
+  const rankQuery = useLoyaltyRankQuery(user?.id, {
+    enabled: canRender && typeof user?.id === 'number',
+  });
 
   const points = pointsQuery.data?.points ?? 0;
   const history = pointsQuery.data?.history ?? [];

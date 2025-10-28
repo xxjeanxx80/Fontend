@@ -10,11 +10,8 @@ const config: Config = {
     '^@testing-library/react$': '<rootDir>/test/mocks/testing-library-react',
     '\\.(css|less|sass|scss)$': '<rootDir>/test/mocks/identity-obj-proxy',
   },
-  globals: {
-    'ts-jest': {
-      tsconfig: '<rootDir>/tsconfig.jest.json',
-      diagnostics: false,
-    },
+  transform: {
+    '^.+\\.tsx?$': ['ts-jest', { tsconfig: '<rootDir>/tsconfig.jest.json', diagnostics: false }],
   },
 };
 

@@ -4,7 +4,7 @@ import { useProtectedRoute } from '@/hooks/useProtectedRoute';
 import { formatDateTime } from '@/api/utils';
 
 const UsersListPage = () => {
-  const canRender = useProtectedRoute();
+  const canRender = useProtectedRoute('/login', ['ADMIN']);
   const usersQuery = useUsersQuery();
   const users = usersQuery.data ?? [];
 

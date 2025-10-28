@@ -13,7 +13,7 @@ import { extractErrorMessage, formatDateTime } from '@/api/utils';
 const AdminSpaApprovalsPage = () => {
   const canRender = useProtectedRoute('/login', ['ADMIN']);
   const queryClient = useQueryClient();
-  const spaQuery = useSpasQuery({ status: 'PENDING' });
+  const spaQuery = useSpasQuery({ status: 'PENDING' }, { enabled: canRender });
 
   const approvalMutation = useMutation({
     mutationFn: ({ spaId, payload }: { spaId: number; payload: AdminUpdateSpaApprovalDto }) =>

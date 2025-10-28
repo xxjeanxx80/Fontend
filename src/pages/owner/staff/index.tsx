@@ -118,9 +118,11 @@ const StaffManagementPage = () => {
       return;
     }
     const formData = new FormData(event.currentTarget);
+    const startAtValue = String(formData.get('startAt') ?? '');
+    const endAtValue = String(formData.get('endAt') ?? '');
     const payload = {
-      startAt: String(formData.get('startAt') ?? ''),
-      endAt: String(formData.get('endAt') ?? ''),
+      startAt: startAtValue ? new Date(startAtValue).toISOString() : '',
+      endAt: endAtValue ? new Date(endAtValue).toISOString() : '',
     };
     assignShiftMutation.mutate(
       { staffId: activeStaff.id, data: payload },
@@ -136,9 +138,11 @@ const StaffManagementPage = () => {
       return;
     }
     const formData = new FormData(event.currentTarget);
+    const startAtValue = String(formData.get('startAt') ?? '');
+    const endAtValue = String(formData.get('endAt') ?? '');
     const payload = {
-      startAt: String(formData.get('startAt') ?? ''),
-      endAt: String(formData.get('endAt') ?? ''),
+      startAt: startAtValue ? new Date(startAtValue).toISOString() : '',
+      endAt: endAtValue ? new Date(endAtValue).toISOString() : '',
       reason: String(formData.get('reason') ?? ''),
     };
     requestTimeOffMutation.mutate(
@@ -337,9 +341,9 @@ const StaffManagementPage = () => {
                 <button
                   type="submit"
                   className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white shadow transition hover:bg-primary/90 focus:outline-none focus:ring focus:ring-primary/40"
-                  disabled={createStaffMutation.isLoading}
+                  disabled={createStaffMutation.isPending}
                 >
-                  {createStaffMutation.isLoading ? 'Saving…' : 'Add team member'}
+                  {createStaffMutation.isPending ? 'Saving…' : 'Add team member'}
                 </button>
               </div>
             </form>
@@ -422,18 +426,18 @@ const StaffManagementPage = () => {
                   <button
                     type="submit"
                     className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white shadow transition hover:bg-primary/90 focus:outline-none focus:ring focus:ring-primary/40"
-                    disabled={updateStaffMutation.isLoading}
+                    disabled={updateStaffMutation.isPending}
                   >
-                    {updateStaffMutation.isLoading ? 'Saving…' : 'Save changes'}
+                    {updateStaffMutation.isPending ? 'Saving…' : 'Save changes'}
                   </button>
                 </div>
                 <button
                   type="button"
                   onClick={() => handleDeleteStaff(activeStaff)}
                   className="w-full rounded-lg border border-rose-500 px-4 py-2 text-sm font-semibold text-rose-500 transition hover:bg-rose-50 focus:outline-none focus:ring focus:ring-rose-200/60 dark:border-rose-400 dark:text-rose-300"
-                  disabled={deleteStaffMutation.isLoading}
+                  disabled={deleteStaffMutation.isPending}
                 >
-                  {deleteStaffMutation.isLoading ? 'Removing…' : 'Remove from spa'}
+                  {deleteStaffMutation.isPending ? 'Removing…' : 'Remove from spa'}
                 </button>
               </form>
 
@@ -466,9 +470,9 @@ const StaffManagementPage = () => {
                   <button
                     type="submit"
                     className="w-full rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white shadow transition hover:bg-primary/90 focus:outline-none focus:ring focus:ring-primary/40"
-                    disabled={assignShiftMutation.isLoading}
+                    disabled={assignShiftMutation.isPending}
                   >
-                    {assignShiftMutation.isLoading ? 'Scheduling…' : 'Schedule shift'}
+                    {assignShiftMutation.isPending ? 'Scheduling…' : 'Schedule shift'}
                   </button>
                 </form>
 
@@ -509,9 +513,9 @@ const StaffManagementPage = () => {
                   <button
                     type="submit"
                     className="w-full rounded-lg bg-amber-500 px-4 py-2 text-sm font-semibold text-white shadow transition hover:bg-amber-600 focus:outline-none focus:ring focus:ring-amber-400/40"
-                    disabled={requestTimeOffMutation.isLoading}
+                    disabled={requestTimeOffMutation.isPending}
                   >
-                    {requestTimeOffMutation.isLoading ? 'Submitting…' : 'Log time off'}
+                    {requestTimeOffMutation.isPending ? 'Submitting…' : 'Log time off'}
                   </button>
                 </form>
               </div>

@@ -13,6 +13,11 @@ const OwnerDashboardPage = () => {
     return <div className="p-8 text-gray-500">Loading...</div>;
   }
 
+  const completionRate =
+    snapshot && typeof snapshot.totalBookings === 'number' && snapshot.totalBookings > 0
+      ? Math.round((snapshot.completedBookings / snapshot.totalBookings) * 100)
+      : null;
+
   return (
     <OwnerLayout
       title="Owner dashboard"
@@ -52,7 +57,7 @@ const OwnerDashboardPage = () => {
             <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-navy-900">
               <p className="text-sm font-medium uppercase tracking-wide text-slate-500">Pending payouts</p>
               <p className="mt-4 text-3xl font-semibold text-slate-900 dark:text-white">
-                {snapshot?.pendingPayouts ?? 0}
+                {formatCurrency(snapshot?.pendingPayouts ?? 0)}
               </p>
             </div>
           </>
@@ -102,9 +107,7 @@ const OwnerDashboardPage = () => {
             <div className="flex items-center justify-between">
               <dt className="text-sm text-slate-500">Completion rate</dt>
               <dd className="text-base font-semibold text-slate-900 dark:text-white">
-                {snapshot && snapshot.completedBookings > 0
-                  ? `${snapshot.completedBookings} completed`
-                  : 'Awaiting data'}
+                {completionRate !== null ? `${completionRate}% completed` : 'Awaiting data'}
               </dd>
             </div>
           </dl>

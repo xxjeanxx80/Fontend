@@ -61,18 +61,24 @@ const AdminSystemSettingsPage = () => {
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const payload = {
-      key: formState.key,
+    const basePayload = {
       value: formState.value,
       description: formState.description || undefined,
     };
 
     if (editingSetting) {
-      updateMutation.mutate(payload, {
+      if (!editingSetting.key) {
+        return;
+      }
+      updateMutation.mutate(basePayload, {
         onSuccess: closeModal,
       });
     } else {
-      createMutation.mutate(payload, {
+      const createPayload = {
+        key: formState.key,
+        ...basePayload,
+      };
+      createMutation.mutate(createPayload, {
         onSuccess: closeModal,
       });
     }

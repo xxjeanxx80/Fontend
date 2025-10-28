@@ -20,8 +20,12 @@ const SpaDetailPage = () => {
     return Number.isNaN(parsed) ? undefined : parsed;
   }, [router.query.id]);
 
-  const spaQuery = useSpaQuery(spaId);
-  const servicesQuery = useServicesQuery(spaId ? { spaId } : undefined);
+  const spaQuery = useSpaQuery(spaId, {
+    enabled: canRender && typeof spaId === 'number',
+  });
+  const servicesQuery = useServicesQuery(spaId ? { spaId } : undefined, {
+    enabled: canRender && typeof spaId === 'number',
+  });
 
   const spa = spaQuery.data;
   const services = servicesQuery.data ?? [];
@@ -104,9 +108,9 @@ const SpaDetailPage = () => {
                       <div className="text-sm font-semibold text-primary">
                         {formatCurrency(service.price ?? 0)}
                       </div>
-                      {service.duration && (
+                      {typeof service.durationMinutes === 'number' && (
                         <div className="text-xs font-medium uppercase tracking-wide text-slate-400">
-                          Duration: {service.duration} mins
+                          Duration: {service.durationMinutes} mins
                         </div>
                       )}
                       <Link

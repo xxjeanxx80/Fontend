@@ -14,12 +14,18 @@ import type {
 import type { ApiResponse, Spa } from '../types';
 import { extractErrorMessage } from '../utils';
 
-export const useSpaProfileQuery = (spaId?: number) =>
+export interface SpaProfileQueryOptions {
+  enabled?: boolean;
+  staleTime?: number;
+}
+
+export const useSpaProfileQuery = (spaId?: number, options: SpaProfileQueryOptions = {}) =>
   useQuery<ApiResponse<Spa>, unknown, Spa | undefined>({
     queryKey: ['spa', spaId],
-    enabled: typeof spaId === 'number',
+    enabled: typeof spaId === 'number' && (options.enabled ?? true),
     queryFn: () => getSpaById(spaId as number),
     select: (response) => response.data,
+    staleTime: options.staleTime,
   });
 
 export const useCreateSpaMutation = () => {

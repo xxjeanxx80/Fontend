@@ -1,4 +1,4 @@
-import { FormEvent, useMemo, useState } from 'react';
+import { FormEvent, useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import OwnerLayout from '../components/OwnerLayout';
 import { useProtectedRoute } from '@/hooks/useProtectedRoute';
@@ -26,7 +26,18 @@ const OwnerBookingsPage = () => {
   const [rescheduleTarget, setRescheduleTarget] = useState<Booking | null>(null);
   const [cancelTarget, setCancelTarget] = useState<Booking | null>(null);
 
-  const bookingsQuery = useBookingsQuery(spaId ? { spaId } : undefined);
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+    if (!canRender && !localStorage.getItem('access_token')) {
+      void router.replace('/owner/login');
+    }
+  }, [canRender, router]);
+
+  const bookingsQuery = useBookingsQuery(spaId ? { spaId } : undefined, {
+    enabled: canRender,
+  });
   const bookings = bookingsQuery.data ?? [];
 
   const rescheduleMutation = useRescheduleBookingMutation(rescheduleTarget?.id ?? 0);
@@ -82,7 +93,7 @@ const OwnerBookingsPage = () => {
   };
 
   if (!canRender) {
-    return <div className="p-8 text-gray-500">Loading...</div>;
+    return null;
   }
 
   return (

@@ -26,7 +26,9 @@ const SpaManagementPage = () => {
   const [spaIdInput, setSpaIdInput] = useState(querySpaId?.toString() ?? '');
   const [activeSpaId, setActiveSpaId] = useState<number | undefined>(querySpaId);
 
-  const spaQuery = useSpaProfileQuery(activeSpaId);
+  const spaQuery = useSpaProfileQuery(activeSpaId, {
+    enabled: canRender && typeof activeSpaId === 'number',
+  });
   const spa = spaQuery.data;
 
   const [editForm, setEditForm] = useState({
@@ -54,9 +56,7 @@ const SpaManagementPage = () => {
     const parsedId = Number.parseInt(spaIdInput, 10);
     if (!Number.isNaN(parsedId)) {
       setActiveSpaId(parsedId);
-      router.replace({ pathname: router.pathname, query: parsedId ? { spaId: parsedId } : undefined }, undefined, {
-        shallow: true,
-      });
+      router.replace({ pathname: router.pathname, query: { spaId: parsedId } }, undefined, { shallow: true });
     }
   };
 

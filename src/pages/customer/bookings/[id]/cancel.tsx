@@ -18,7 +18,9 @@ const CancelBookingPage = () => {
     return Number.isNaN(parsed) ? undefined : parsed;
   }, [router.query.id]);
 
-  const bookingQuery = useBookingQuery(bookingId);
+  const bookingQuery = useBookingQuery(bookingId, {
+    enabled: canRender && typeof bookingId === 'number',
+  });
   const booking = bookingQuery.data;
   const [reason, setReason] = useState('');
 

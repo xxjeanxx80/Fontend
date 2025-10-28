@@ -2,7 +2,11 @@ import { formatCurrency, formatDateTime } from '@/api/utils';
 
 describe('api utils', () => {
   test('formatCurrency formats properly', () => {
-    expect(formatCurrency(10000)).toContain('₫');
+    expect(formatCurrency(10000)).toContain('$');
+  });
+
+  test('formatCurrency formats VND when locale provided', () => {
+    expect(formatCurrency(10000, { currency: 'VND' })).toContain('₫');
   });
 
   test('formatDateTime returns readable string', () => {

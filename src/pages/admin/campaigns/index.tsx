@@ -89,8 +89,8 @@ const AdminCampaignsPage = () => {
       name: formState.name,
       description: formState.description || undefined,
       discountPercent: Number(formState.discountPercent) || 0,
-      startsAt: formState.startsAt,
-      endsAt: formState.endsAt || undefined,
+      startsAt: formState.startsAt ? new Date(formState.startsAt).toISOString() : undefined,
+      endsAt: formState.endsAt ? new Date(formState.endsAt).toISOString() : undefined,
       isActive: formState.isActive,
     };
 
@@ -142,15 +142,16 @@ const AdminCampaignsPage = () => {
       key: 'isActive',
       header: 'Status',
       render: (campaign) => (
-        <button
-          type="button"
-          onClick={() => statusMutation.mutate({ campaignId: campaign.id, data: { isActive: !campaign.isActive } })}
-          className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold transition focus:outline-none focus:ring-2 focus:ring-primary/40 ${
+          <button
+            type="button"
+            disabled={statusMutation.isPending}
+            onClick={() => statusMutation.mutate({ campaignId: campaign.id, data: { isActive: !campaign.isActive } })}
+            className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold transition focus:outline-none focus:ring-2 focus:ring-primary/40 disabled:cursor-not-allowed disabled:opacity-60 ${
             campaign.isActive
               ? 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200 dark:bg-emerald-900/40 dark:text-emerald-200'
               : 'bg-slate-200 text-slate-700 hover:bg-slate-300 dark:bg-slate-700/60 dark:text-slate-200'
           }`}
-        >
+          >
           {campaign.isActive ? 'Active' : 'Paused'}
         </button>
       ),

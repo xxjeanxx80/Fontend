@@ -17,19 +17,27 @@ import type {
   RescheduleBookingDto,
 } from '../bookings.api';
 
-export const useBookingsQuery = (filters?: BookingFilters) =>
+export interface UseQueryOptions {
+  enabled?: boolean;
+  staleTime?: number;
+}
+
+export const useBookingsQuery = (filters?: BookingFilters, options: UseQueryOptions = {}) =>
   useQuery<ApiResponse<Booking[]>, unknown, Booking[]>({
     queryKey: ['bookings', filters],
     queryFn: () => getBookings(filters),
     select: (response) => response.data,
+    enabled: options.enabled ?? true,
+    staleTime: options.staleTime,
   });
 
-export const useBookingQuery = (id?: number) =>
+export const useBookingQuery = (id?: number, options: UseQueryOptions = {}) =>
   useQuery<ApiResponse<Booking>, unknown, Booking | undefined>({
     queryKey: ['bookings', id],
-    enabled: typeof id === 'number',
+    enabled: typeof id === 'number' && (options.enabled ?? true),
     queryFn: () => getBookingById(id as number),
     select: (response) => response.data,
+    staleTime: options.staleTime,
   });
 
 export const useCreateBookingMutation = () => {
