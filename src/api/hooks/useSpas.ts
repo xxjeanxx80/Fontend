@@ -19,7 +19,7 @@ export const useSpasQuery = (filters?: SpaFilters, options: SpaQueryOptions = {}
 
 export const useSpaQuery = (id?: number, options: SpaQueryOptions = {}) =>
   useQuery<ApiResponse<Spa>, unknown, Spa | undefined>({
-    queryKey: ['spas', id],
+    queryKey: ['spa', id],
     enabled: typeof id === 'number' && (options.enabled ?? true),
     queryFn: () => getSpaById(id as number),
     select: (response) => response.data,

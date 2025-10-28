@@ -28,7 +28,7 @@ const CancelBookingPage = () => {
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (!bookingId) {
+    if (typeof bookingId !== 'number') {
       return;
     }
 
