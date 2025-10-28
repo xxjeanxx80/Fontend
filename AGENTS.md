@@ -1,119 +1,228 @@
-# AGENTS.md (Frontend – Beauty Booking Hub Dashboard)
+🧠 Overview
 
-## Tech Stack
-- **Framework:** Next.js 14 (App Router)
-- **UI Kit:** TailAdmin (React + TailwindCSS)
-- **Language:** TypeScript
-- **State Management:** React hooks, Context API
-- **HTTP Client:** Axios
-- **Auth:** JWT stored in localStorage (Bearer token)
-- **API Backend:** Beauty Booking Hub API (`http://localhost:3000`)
-- **Swagger Endpoint:** `/api/docs-json`
+This is the frontend client for Beauty Booking Hub, built using Next.js 14 App Router and TailAdmin UI Kit.
 
-## Backend API Definition
-- Base URL: http://localhost:3000
-- Swagger JSON file: /public/swagger.json
-- Every endpoint follows NestJS convention with { success, message, data }.
-- All endpoints require Bearer JWT tokens.
+The goal is to provide:
 
-## Goal
-Build a responsive admin dashboard for Beauty Booking Hub that connects directly to the backend APIs.
+Customer booking and management UI
 
-## Coding Conventions
-- All API logic lives in `src/api/` folder.
-- Axios instance defined in `src/api/client.ts` with:
-  ```ts
-  const api = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_API_URL,
-  });
-  api.interceptors.request.use(config => {
-    const token = localStorage.getItem('access_token');
-    if (token) config.headers.Authorization = `Bearer ${token}`;
-    return config;
-  });
-## Each module (users, customers, bookings, spas, etc.) has:
-- src/api/<module>.api.ts
-- src/pages/<module>/index.tsx (list)
-- src/pages/<module>/create.tsx (form)
+Spa Owner management panel
 
-## API Integration Rules
-- Use REST endpoints defined by backend (NestJS):
-- /auth/login, /auth/register, /auth/refresh
-- /users, /customers, /bookings, /spas, /services
-- Authenticated routes require Bearer token.
-- Store token in localStorage after successful login.
-- Implement route guard: redirect to /login if no token.
+Admin TailAdmin dashboard
 
-## Data Display
-- Use TailAdmin table & form components.
-- Format API responses with data.success, data.message, data.data.
+and connect directly to the backend API (http://localhost:3000) built with NestJS.
 
-## Error Handling
-- Display errors with toast notifications.
-- Handle 401 (Unauthorized): clear token & redirect to login.
-- Handle validation errors: show form field messages.
+🧩 Tech Stack
 
-## Developer Commands
-- npm install
-- npm run dev → runs on http://localhost:3001
-.env.local:
-- NEXT_PUBLIC_API_URL=http://localhost:3000
+Framework: Next.js 14+ (App Router only)
 
-## Build Goals
-- Integrate with Beauty Booking Hub backend.
-- Implement modules: Auth, Users, Customers, Bookings, Dashboard.
-- Use backend Swagger JSON for type-safe API generation.
+Language: TypeScript
 
-## 🎯 Product Scope & UX Map
+UI Framework: TailAdmin + TailwindCSS
 
-### 👩‍💼 For Customers:
-- Sign up / Login using Google or Facebook (OAuth2)
-- Search for nearby spas (geolocation + filters)
-- Browse available services (at-spa / at-home)
-- Book service: select time, staff, apply coupon
-- Manage bookings (reschedule, cancel, rate)
-- Track loyalty points and rank
+HTTP Client: Axios
 
-### 🏪 For Spa Owners:
-- Register new spa and request approval
-- Manage spa details, services, pricing
-- Manage staff, shifts, and time-off
-- Handle bookings (approve, reject)
-- View revenue, payout requests, commissions
+Auth: JWT (Bearer token stored in localStorage or cookies)
 
-### 🛠️ For Admins:
-- Dashboard metrics (bookings, revenue, growth)
-- Approve/reject spas and campaigns
-- Manage coupons, reports, system settings
-- Handle logs, access control, and payouts
+Routing: App Router groups for each role
 
----
+State Management: React hooks + Context
 
-## 🧱 Feature → Backend Service Mapping
-| Frontend Feature | Backend Service | Key Endpoints |
-|------------------|----------------|----------------|
-| Auth | Auth Service | /auth/login, /auth/register, /auth/google |
-| Users | User Service | /users, /users/:id/loyalty/points |
-| Spas | Spa Service | /spas, /spas/:id/approval |
-| Services | Service Service | /services |
-| Staff | Staff Service | /staff, /staff/:id/time-off |
-| Bookings | Booking Service | /bookings, /bookings/:id/reschedule |
-| Feedbacks | Feedback Service | /feedbacks, /feedbacks/booking/:id |
-| Payments | Payment Service | /payments, /payments/refund |
-| Payouts | Payout Service | /payouts, /payouts/review |
-| Campaigns | Campaign Service | /campaigns |
-| Coupons | Coupon Service | /coupons |
-| Reports | Report Service | /reports |
-| Dashboard | Dashboard Service | /dashboard/snapshots/latest |
+API Documentation: Swagger /api/docs-json
 
----
+📂 Project Structure
+src/
+├── app/
+│   ├── layout.tsx
+│   ├── page.tsx                # Public home
+│   ├── (auth)/
+│   │   ├── signin/page.tsx
+│   │   └── signup/page.tsx
+│   ├── (customer)/
+│   │   ├── layout.tsx
+│   │   ├── customer/page.tsx
+│   │   ├── customer/bookings/page.tsx
+│   │   └── customer/spas/page.tsx
+│   ├── (owner)/
+│   │   ├── layout.tsx
+│   │   ├── owner/page.tsx
+│   │   ├── owner/bookings/page.tsx
+│   │   └── owner/staff/page.tsx
+│   └── (admin)/
+│       ├── layout.tsx
+│       ├── admin/page.tsx
+│       ├── admin/users/page.tsx
+│       ├── admin/bookings/page.tsx
+│       └── admin/settings/page.tsx
+│
+├── components/
+│   ├── ui/
+│   ├── common/
+│   └── layouts/
+│
+├── hooks/
+│   ├── useAuth.ts
+│   ├── useUser.ts
+│   └── useRoleRedirect.ts
+│
+├── lib/
+│   ├── auth.ts
+│   ├── axiosClient.ts
+│   └── constants.ts
+│
+├── middleware.ts
+└── next.config.js
 
-## 🧭 UX Notes
-- Booking page must support **at-home vs at-spa** toggle.
-- Customer search UI uses **geolocation + radius**.
-- Staff selection is **availability-aware** (based on shift/time).
-- Loyalty (points + rank) displayed in **user profile**.
-- Admin dashboard displays **charts (bookings, revenue, payouts)**.
-- Responsive layout: desktop, tablet, mobile.
-- Use **React Query** for async fetching.
-- Optional: i18n (English/Vietnamese).
+⚙️ .env.local configuration
+
+Must be created at project root.
+
+# FRONTEND runs on port 3001
+NEXT_PUBLIC_API_URL=http://localhost:3000/api
+NEXT_PUBLIC_APP_NAME=Beauty Booking Hub
+NEXT_PUBLIC_TAILADMIN_ENABLED=true
+
+🧱 Axios Client (src/lib/axiosClient.ts)
+import axios from 'axios';
+
+const api = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api',
+  withCredentials: true,
+});
+
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('access_token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
+export default api;
+
+🔑 Auth Flow
+
+When user signs up or logs in → call:
+
+POST /auth/register
+
+POST /auth/login
+
+If success:
+
+Save access_token and role in localStorage.
+
+Redirect user by role:
+
+Admin → /admin
+
+Owner → /owner
+
+Customer → /customer
+
+If token missing or invalid → redirect to /signin.
+
+🧭 Middleware (src/middleware.ts)
+
+Handles route protection and redirects:
+
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
+
+export function middleware(req: NextRequest) {
+  const token = req.cookies.get('token')?.value;
+  const role = req.cookies.get('role')?.value;
+  const path = req.nextUrl.pathname;
+
+  if (!token && path.startsWith('/admin')) {
+    return NextResponse.redirect(new URL('/signin', req.url));
+  }
+
+  if (token && (path.startsWith('/signin') || path.startsWith('/signup'))) {
+    switch (role) {
+      case 'ADMIN': return NextResponse.redirect(new URL('/admin', req.url));
+      case 'OWNER': return NextResponse.redirect(new URL('/owner', req.url));
+      case 'CUSTOMER': return NextResponse.redirect(new URL('/customer', req.url));
+    }
+  }
+
+  return NextResponse.next();
+}
+
+export const config = {
+  matcher: ['/((?!_next|static|favicon.ico).*)'],
+};
+
+🚀 Build & Run Commands
+# Install dependencies
+npm install
+
+# Run dev server (http://localhost:3001)
+npm run dev
+
+# Build production version
+npm run build
+
+# Start production server
+npm start
+
+🧪 Test Connectivity
+
+To ensure frontend connects to backend successfully:
+
+# Test backend availability
+curl http://localhost:3000/api/health
+
+# Test signup endpoint
+curl -X POST http://localhost:3000/api/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{"email":"test@gmail.com","password":"123456","role":"CUSTOMER"}'
+
+
+If these return { success: true }, frontend will connect correctly.
+
+💥 Common Issues
+Error	Cause	Fix
+Failed to fetch	Backend not running / wrong URL	Update .env.local → NEXT_PUBLIC_API_URL=http://localhost:3000/api
+CORS policy	Backend not allowing origin http://localhost:3001	Enable CORS in backend: origin: ['http://localhost:3001']
+401 Unauthorized	Missing token	Check login flow → token saved to localStorage
+404	Wrong endpoint path	Verify Swagger docs /api/docs-json
+✅ Expected Behavior
+
+npm run dev → launches localhost:3001
+
+Register/Login calls backend http://localhost:3000/api/auth/...
+
+JWT token stored in localStorage
+
+User redirected by role
+
+Admin UI uses TailAdmin components
+
+Customer/Owner UIs use simpler layouts
+
+🤖 Codex Task Scope
+
+Codex should:
+
+Auto-create .env.local (if missing).
+
+Ensure src/lib/axiosClient.ts uses process.env.NEXT_PUBLIC_API_URL.
+
+Test connection with backend /api/health and /api/auth/login.
+
+Log clear console error if fetch fails (with message “Backend not reachable”).
+
+On success → continue integrating modules via REST APIs.
+
+🧠 Summary
+
+This configuration ensures Codex:
+
+Detects the App Router architecture (no /pages/)
+
+Understands correct API base (http://localhost:3000/api)
+
+Initializes .env.local automatically
+
+Links frontend:3001 ↔ backend:3000 successfully
