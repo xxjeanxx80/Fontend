@@ -1,24 +1,21 @@
-import { Outfit } from 'next/font/google';
+import type { Metadata } from 'next';
+import { Suspense } from 'react';
+
 import './globals.css';
+import Providers from './common/Providers';
 
-import { SidebarProvider } from '@/context/SidebarContext';
-import { ThemeProvider } from '@/context/ThemeContext';
+export const metadata: Metadata = {
+  title: 'Beauty Booking Hub',
+  description: 'Unified customer, owner, and admin portal for the Beauty Booking Hub marketplace.',
+};
 
-const outfit = Outfit({
-  subsets: ["latin"],
-});
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${outfit.className} dark:bg-gray-900`}>
-        <ThemeProvider>
-          <SidebarProvider>{children}</SidebarProvider>
-        </ThemeProvider>
+      <body className="bg-slate-50 text-slate-900">
+        <Suspense fallback={<div className="flex min-h-screen items-center justify-center">Loading…</div>}>
+          <Providers>{children}</Providers>
+        </Suspense>
       </body>
     </html>
   );
