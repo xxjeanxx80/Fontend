@@ -35,8 +35,10 @@ const OwnerBookingsPage = () => {
     }
   }, [canRender, router]);
 
-  const bookingsQuery = useBookingsQuery(spaId ? { spaId } : undefined, {
-    enabled: canRender,
+  const hasSpaId = typeof spaId === 'number' && !Number.isNaN(spaId);
+
+  const bookingsQuery = useBookingsQuery(hasSpaId ? { spaId } : undefined, {
+    enabled: canRender && hasSpaId,
   });
   const bookings = bookingsQuery.data ?? [];
 
@@ -148,7 +150,9 @@ const OwnerBookingsPage = () => {
               ) : bookings.length === 0 ? (
                 <tr>
                   <td colSpan={6} className="px-6 py-10 text-center text-sm">
-                    {spaId ? 'No bookings yet. Share your spa link to start receiving reservations.' : 'Select a spa to review bookings.'}
+                    {hasSpaId
+                      ? 'No bookings yet. Share your spa link to start receiving reservations.'
+                      : 'Select a spa to review bookings.'}
                   </td>
                 </tr>
               ) : (

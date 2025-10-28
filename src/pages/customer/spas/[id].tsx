@@ -34,6 +34,16 @@ const SpaDetailPage = () => {
     return <div className="p-8 text-gray-500">Loading...</div>;
   }
 
+  if (spaQuery.isError) {
+    return (
+      <CustomerLayout title="Unable to load spa">
+        <div className="rounded-2xl border border-rose-200 bg-white p-12 text-center text-sm text-rose-600 dark:border-rose-900 dark:bg-navy-900 dark:text-rose-200">
+          We couldn’t load this spa right now. Please refresh the page or try again later.
+        </div>
+      </CustomerLayout>
+    );
+  }
+
   if (!spa) {
     return (
       <CustomerLayout title="Loading spa details">
